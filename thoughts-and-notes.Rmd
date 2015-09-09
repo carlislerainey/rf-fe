@@ -2,7 +2,7 @@
 title: "Flexible Models, Within-Country Heterogeneity, and Out-of-Sample Prediction"
 author: "Carlisle Rainey"
 date: "September 9, 2015"
-output: html_document
+output: pdf_document
 ---
 
 **Open this in R Studio for amazingness.**
@@ -22,3 +22,38 @@ plot(cars)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+## Simple Example with GAMs
+
+Claim: Suppose you are interested in predicting a new observation $y_{new}$ from $x_{new}$ for an unobserved group. This group might simply fall outside the training set. Now suppose a true model $y_{ij} = x_{ij} + \gamma_j + \epsilon_{ij}$, where $x_{ij}$ is fixed, $\gamma_j \sim N(0, \sigma^2_{\gamma})$, and $\epsilon_{ij} \sim N(0, \sigma^2_{\epsilon})$. 
+
+```{r, echo=FALSE}
+# set seed
+set.seed(8972354)
+
+# parameters
+n_groups <- 10
+n_times <- 100
+sd_alpha <- 20
+sd_gamma <- 20
+sd_epsilon <- 1
+
+# create variables
+groups <- 1:n_groups
+years <- seq(2000 - n_times + 1, 2000)
+df <- data.frame(expand.grid(group = groups, year = years, KEEP.OUT.ATTRS = FALSE))
+
+# simulate data
+group_alpha <- seq(-50, 50, length.out = n_groups) #runif(n_groups, -1*sd_alpha, sd_alpha)
+group_gamma <- rnorm(n_groups, sd = sd_gamma)
+df$x <- group_alpha[df$group] + rnorm(n_groups*n_times, sd = 1)
+df$y <- df$x + group_gamma[df$group] + rnorm(n_groups*n_times, sd = sd_epsilon)
+
+# plot data
+library(ggplot2)
+ggplot(df, aes(x, y)) + 
+	geom_point(aes(color = factor(group)), alpha = 0.5) + 
+	geom_smooth(se = FALSE) + 
+	geom_smooth(method = "lm", se = FALSE) + 
+	geom_abline(intercept = 0, slope = 1)
+```
