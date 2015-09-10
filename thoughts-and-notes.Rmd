@@ -1,11 +1,29 @@
 ---
 title: "Flexible Models, Within-Country Heterogeneity, and Out-of-Sample Prediction"
-author: "Carlisle Rainey"
+author: "Carlisle Rainey & Florian M. Hollenbach"
 date: "September 9, 2015"
 output: pdf_document
 ---
 
-**Open this in R Studio for amazingness.**
+Out-of-Sample prediction ought to be the gold standard of theory evaluation. In fact, out-of-sample prediction is a necessary condition of a causal argument. On the other hand, prediction is not a sufficient condition for the discovery of a causal effect. This is especially true for unstructured, non-parametric models that become more and more common in political science. While we advocate for theory building and testing using out-of-sample prediction, we show that scholars have to be extremely careful in designing the cross-validation procedures and modeling choices. Moreover, depending on the structure of the data, constraining models (i.e. parameterization) based on careful evaluation can be important. Non-parametric models are no panecae to prediction and theory testing in an interdependent world. 
+
+1. We posit that for a general theory to make arguments about a causal effect, it ought to have true out-of-sample predictive power. In particular, the theory should allow for the prediction of truly new cases (e.g. countries, states, cities, individuals) and must have some predictive power on these cases. (I wonder if it is possible to derive something like this from Rubin)
+
+2. ML algorithms very strongly assume independence, more so than OLS, etc.
+
+3. if ML is used for theory evaluation or EDA, the structure of the data becomes very important. Clustering on X & Y (fixed effects) can lead to the overvalueing of variables with high between country variance (or high btw/within variance ratio) and that are correlated with y. 
+
+4. even if clustering in x is unrelated to y, the structure in linear models may actually aid out-of-sample prediction (with new cases).
+
+
+
+
+
+
+
+
+
+
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
